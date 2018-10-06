@@ -5,8 +5,6 @@ import (
     "math"
 )
 
-// When "n == 1" this function will return a list with duplicates
-// but this doesn't matter for this use case
 func divisors(n int) []int {
     var divisors []int
     limit := int(math.Sqrt(float64(n)))
@@ -14,6 +12,13 @@ func divisors(n int) []int {
     for i := 1; i < limit + 1; i++ {
         if n % i == 0 {
             divisors = append(divisors, i, n / i)
+        }
+    }
+
+    for index, item := range divisors {
+        if item == n {
+            divisors = append(divisors[:index], divisors[index + 1:]...)
+            break
         }
     }
 
