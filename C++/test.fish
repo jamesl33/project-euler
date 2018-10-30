@@ -17,7 +17,7 @@ if set -q _flag_problem
 else
     for num in (seq (math (count ls *.cpp) - 1))
         set -l answer (sed "$num!d" answers.txt)
-        set -l output (g++ $num.cpp -o task_$num; and ./task_$num; and rm task_$num)
+        set -l output (g++ $num.cpp -o task_$num; and eval ./task_$num; and rm task_$num)
         validate $num $answer $output
     end
 end
