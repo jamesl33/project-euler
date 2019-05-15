@@ -1,6 +1,11 @@
-/* This file is part of project-euler
+project-euler
+-------------
+project-euler is a project containing *mostly* my solutions to some of the
+questions found on the [Project Euler](https://projecteuler.net/) website.
 
-Copyright (C) 2019, James Lee <jamesl33info@gmail.com>.
+License
+-------
+Copyright (C) 2019 James Lee <jamesl33info@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,28 +18,4 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>. */
-
-package main
-
-import "fmt"
-
-func LargestPrimeFactor(n int) int {
-    current_largest := 0
-    divisor := 2
-
-    for n > 1 {
-        for n % divisor == 0 {
-            current_largest = divisor
-            n /= divisor
-        }
-
-        divisor++
-    }
-
-    return current_largest
-}
-
-func main() {
-    fmt.Println(LargestPrimeFactor(600851475143))
-}
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
