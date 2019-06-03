@@ -224,15 +224,31 @@ func main() {
                 result = Max(GridProduct(gridNumbers, x, y, 1, 0, adj), result)
             }
 
+            if (x - adj >= width) {
+                result = Max(GridProduct(gridNumbers, x, y, -1, 0, adj), result)
+            }
+
             if y + adj <= height {
                 result = Max(GridProduct(gridNumbers, x, y, 0, 1, adj), result)
+            }
+
+            if y - adj >= 0 {
+                result = Max(GridProduct(gridNumbers, x, y, 0, -1, adj), result)
             }
 
             if x + adj <= width && y + adj <= height {
                 result = Max(GridProduct(gridNumbers, x, y, 1, 1, adj), result)
             }
 
-            if x - adj >= -1 && y + adj <= height {
+            if x - adj >= 0 && y - adj >= 0 {
+                result = Max(GridProduct(gridNumbers, x, y, -1, -1, adj), result)
+            }
+
+            if x + adj <= height && y - adj >= 0 {
+                result = Max(GridProduct(gridNumbers, x, y, 1, -1, adj), result)
+            }
+
+            if x - adj >= 0 && y + adj <= height {
                 result = Max(GridProduct(gridNumbers, x, y, -1, 1, adj), result)
             }
         }
