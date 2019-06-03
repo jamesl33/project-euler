@@ -23,35 +23,34 @@ import (
     "sort"
 )
 
-func GenPermutations(slice []string) [][]string {
-    var helper func(slice []string, n int)
-    var permutations [][]string
+func GenPermutations(str string) []string {
+    var helper func(sli []string, ind int)
 
-    helper = func(slice []string, n int) {
-        if n == 1 {
-            tmp := make([]string, len(slice))
-            copy(tmp, slice)
-            permutations = append(permutations, tmp)
-        } else {
-            for i := 0; i < n; i++ {
-                helper(slice, n - 1)
+    var permutations []string
 
-                if n % 2 == 0 {
-                    slice[i], slice[n - 1] = slice[n - 1], slice[i]
-                } else {
-                    slice[0], slice[n - 1] = slice[n - 1], slice[0]
-                }
+    helper = func(sli []string, ind int) {
+        if ind == 1 {
+            permutations = append(permutations, strings.Join(sli, ""))
+        }
+
+        for i := 0; i < ind; i++ {
+            helper(sli, ind - 1)
+
+            if ind % 2 == 0 {
+                sli[i], sli[ind - 1] = sli[ind - 1], sli[i]
+            } else {
+                sli[0], sli[ind - 1] = sli[ind - 1], sli[0]
             }
         }
     }
 
-    helper(slice, len(slice))
+    helper(strings.Split(str, ""), len(str))
 
     return permutations
 }
 
 func main() {
-    permutations := GenPermutations([]string {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"})
-    sort.Slice(permutations, func(i, j int) bool {return strings.Join(permutations[i], "") < strings.Join(permutations[j], "")})
-    fmt.Println(strings.Join(permutations[1000000 - 1], ""))
+    permutations := GenPermutations("0123456789")
+    sort.Slice(permutations, func(i, j int) bool {return permutations[i] < permutations[j]})
+    fmt.Println(permutations[1000000 - 1])
 }
