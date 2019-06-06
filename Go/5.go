@@ -20,7 +20,7 @@ package main
 import "fmt"
 
 func is_divisible(n int) bool {
-    for i := 1; i < 20; i++ {
+    for i := 20; i > 0; i-- {
         if !(n % i == 0) {
             return false
         }
@@ -29,7 +29,7 @@ func is_divisible(n int) bool {
 }
 
 func main() {
-    current_num := 1
+    current_num := 2520
 
     for true {
         if is_divisible(current_num) {
