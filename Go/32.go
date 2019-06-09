@@ -20,17 +20,8 @@ package main
 import (
     "fmt"
     "strconv"
+    "strings"
 )
-
-func StringContains(s string, c rune) bool {
-    for _, e := range s {
-        if e == c {
-            return true
-        }
-    }
-
-    return false
-}
 
 func IntContains(s []int, n int) bool {
     for _, e := range s {
@@ -44,7 +35,7 @@ func IntContains(s []int, n int) bool {
 
 func IsPandigital(s string, l int) bool {
     for i := 1; i <= l; i++ {
-        if !StringContains(s, []rune(strconv.Itoa(i))[0]) {
+        if !strings.ContainsRune(s, []rune(strconv.Itoa(i))[0]) {
             return false
         }
     }
