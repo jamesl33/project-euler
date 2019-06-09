@@ -17,43 +17,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "math"
+)
 
-func is_prime(n int) bool {
-    if n <= 1 {
-        return false
-    } else if n <= 3 {
-        return true
-    } else if n % 2 == 0 || n % 3 == 0 {
-        return false
+func EratosthenesSieve(n int) []int {
+    upperBound := 100
+
+    if n > 6 {
+        t := float64(n)
+        upperBound = int(math.Ceil(t * (math.Log(t) + math.Log(math.Log(t)))))
     }
 
-    i := 5
+    sieve := make([]bool, upperBound)
 
-    for i * i <= n {
-        if n % i == 0 || n % (i + 2) == 0 {
-            return false
+    for i := 0; i < upperBound; i++ {
+        sieve[i] = true
+    }
+
+    for i := 2; i < upperBound; i++ {
+        if sieve[i] {
+            for j := i * i; j < upperBound; j += i {
+                sieve[j] = false
+            }
         }
-
-        i += 6
     }
 
-    return true
+    var primes []int
+
+    for i := 0; i < upperBound; i++ {
+        if sieve[i] {
+            primes = append(primes, i)
+        }
+    }
+
+    return primes[2:n + 2]
 }
 
 func main() {
-    primes_found := 0
-    last_prime := 0
-    current_num := 0
-
-    for primes_found <= 10000 {
-        if is_prime(current_num) {
-            primes_found++
-            last_prime = current_num
-        }
-
-        current_num++
-    }
-
-    fmt.Println(last_prime)
+    fmt.Println(EratosthenesSieve(10001)[10000])
 }
