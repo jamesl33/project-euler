@@ -14,6 +14,7 @@ import (
     "sort"
     "strconv"
     "sync"
+    "time"
 )
 
 type Solution struct {
@@ -109,6 +110,7 @@ func FetchAnswers(n int) []string {
 
 func main() {
     // TODO - Allow running a single problem supplied by an argument
+    start := time.Now()
 
     ctx, cancelFunc := context.WithCancel(context.Background())
     defer cancelFunc()
@@ -134,6 +136,8 @@ func main() {
             correctness = "incorrect"
         }
 
-        fmt.Printf("Problem %d: Output is %s '%s == %s'\n", solutions[i].Problem, correctness, solutions[i].Answer, answers[i])
+        fmt.Printf("Problem %03d: Output is %s '%s == %s'\n", solutions[i].Problem, correctness, solutions[i].Answer, answers[i])
     }
+
+    fmt.Printf("Completed in: %v\n", time.Since(start))
 }
