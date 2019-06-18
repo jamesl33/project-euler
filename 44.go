@@ -15,35 +15,36 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-#include <iostream>
+package main
 
-bool is_palindrome(int n) {
-    int original = n;
-    int reversed = 0;
-    int remainder = 0;
+import (
+    "fmt"
+    "math"
+)
 
-    while (n != 0) {
-        remainder = n % 10;
-        reversed = reversed * 10 + remainder;
-        n /= 10;
-    }
-
-    return original == reversed;
+func IsPentagonal(n float64) bool {
+    nthPentagonal := (math.Sqrt(1 + (24 * n)) + 1) / 6
+    return nthPentagonal == math.Trunc(nthPentagonal)
 }
 
-int main() {
-    int current;
-    int largest = 0;
+func main() {
+    for i := 1; ; i++ {
+        n := i * ((3 * i) - 1) / 2
 
-    for (int i = 0; i < 1000; i++) {
-        for (int j = 0; j < 1000; j++) {
-            current = i * j;
+        for j := i - 1; j > 0; j-- {
+            m := j * ((3 * j) - 1) / 2
 
-            if (is_palindrome(current) && current > largest) {
-                largest = current;
+            if !IsPentagonal(float64(n - m)) {
+                continue
             }
+
+            if !IsPentagonal(float64(n + m)) {
+                continue
+            }
+
+            fmt.Println(n - m)
+
+            return
         }
     }
-
-    std::cout << largest << std::endl;
 }

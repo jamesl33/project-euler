@@ -15,38 +15,21 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-#include <iostream>
+package main
 
-bool isPrime(int n) {
-    if (n <= 1) {
-        return false;
-    } else if (n <= 3) {
-        return true;
-    } else if (n % 2 == 0 || n % 3 == 0) {
-        return false;
+import (
+    "fmt"
+    "math/big"
+)
+
+func main() {
+    sum := big.NewInt(int64(0))
+
+    for i := 1; i <= 1000; i++ {
+        next := big.NewInt(int64(i))
+        next = next.Exp(big.NewInt(int64(i)), big.NewInt(int64(i)), nil)
+        sum = sum.Add(sum, next)
     }
 
-    int i = 5;
-
-    while (i * i <= n) {
-        if (n % i == 0 || n % (i + 2) == 0) {
-            return false;
-        }
-
-        i += 6;
-    }
-
-    return true;
-}
-
-int main() {
-    long int total = 0;
-
-    for (int i = 0; i < 2000000; i++) {
-        if (isPrime(i)) {
-            total += i;
-        }
-    }
-
-    std::cout << total << std::endl;
+    fmt.Println(sum.String()[len(sum.String()) - 10:])
 }
