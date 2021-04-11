@@ -10,9 +10,9 @@ import (
 )
 
 func readTriangle() [][]int {
-	file, err := os.Open("p018_triangle.txt")
+	file, err := os.Open("p067_triangle.txt")
 	if err != nil {
-		log.Fatalf("failed to open 'p018_triangle.txt'")
+		log.Fatalf("failed to open 'p067_triangle.txt'")
 	}
 	defer file.Close()
 
