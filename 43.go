@@ -18,75 +18,75 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package main
 
 import (
-    "fmt"
-    "math/big"
-    "strconv"
-    "strings"
+	"fmt"
+	"math/big"
+	"strconv"
+	"strings"
 )
 
 func GenPermutations(str string) []string {
-    var helper func(sli []string, ind int)
+	var helper func(sli []string, ind int)
 
-    var permutations []string
+	var permutations []string
 
-    helper = func(sli []string, ind int) {
-        if ind == 1 {
-            permutations = append(permutations, strings.Join(sli, ""))
-        }
+	helper = func(sli []string, ind int) {
+		if ind == 1 {
+			permutations = append(permutations, strings.Join(sli, ""))
+		}
 
-        for i := 0; i < ind; i++ {
-            helper(sli, ind - 1)
+		for i := 0; i < ind; i++ {
+			helper(sli, ind-1)
 
-            if ind % 2 == 0 {
-                sli[i], sli[ind - 1] = sli[ind - 1], sli[i]
-            } else {
-                sli[0], sli[ind - 1] = sli[ind - 1], sli[0]
-            }
-        }
-    }
+			if ind%2 == 0 {
+				sli[i], sli[ind-1] = sli[ind-1], sli[i]
+			} else {
+				sli[0], sli[ind-1] = sli[ind-1], sli[0]
+			}
+		}
+	}
 
-    helper(strings.Split(str, ""), len(str))
+	helper(strings.Split(str, ""), len(str))
 
-    return permutations
+	return permutations
 }
 
 func IsPandigital(s string) bool {
-    for i := 0; i <= 9; i++ {
-        if !strings.ContainsRune(s, []rune(strconv.Itoa(i))[0]) {
-            return false
-        }
-    }
+	for i := 0; i <= 9; i++ {
+		if !strings.ContainsRune(s, []rune(strconv.Itoa(i))[0]) {
+			return false
+		}
+	}
 
-    return true
+	return true
 }
 
 func IsSpecialPandigital(s string) bool {
-    primes := []int {2, 3, 5, 7, 11, 13, 17}
+	primes := []int{2, 3, 5, 7, 11, 13, 17}
 
-    for i := 1; i < 8; i++ {
-        n, _ := strconv.Atoi(s[i:i + 3])
+	for i := 1; i < 8; i++ {
+		n, _ := strconv.Atoi(s[i : i+3])
 
-        if !(n % primes[i - 1] == 0) {
-            return false
-        }
-    }
+		if !(n%primes[i-1] == 0) {
+			return false
+		}
+	}
 
-    return true
+	return true
 }
 
 func main() {
-    permutations := GenPermutations("0123456789")
+	permutations := GenPermutations("0123456789")
 
-    sum := &big.Int{}
+	sum := &big.Int{}
 
-    for _, permutation := range permutations {
-        if permutation[0] != '0' && IsPandigital(permutation) && IsSpecialPandigital(permutation) {
-            n := &big.Int{}
-            n.SetString(permutation, 10)
+	for _, permutation := range permutations {
+		if permutation[0] != '0' && IsPandigital(permutation) && IsSpecialPandigital(permutation) {
+			n := &big.Int{}
+			n.SetString(permutation, 10)
 
-            sum.Add(sum, n)
-        }
-    }
+			sum.Add(sum, n)
+		}
+	}
 
-    fmt.Println(sum)
+	fmt.Println(sum)
 }

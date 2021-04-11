@@ -18,58 +18,58 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package main
 
 import (
-    "bufio"
-    "fmt"
-    "math"
-    "os"
-    "strings"
+	"bufio"
+	"fmt"
+	"math"
+	"os"
+	"strings"
 )
 
 func ReadWords(filename string) []string {
-    var words []string
+	var words []string
 
-    if file, err := os.Open(filename); err == nil {
-        scanner := bufio.NewScanner(file)
+	if file, err := os.Open(filename); err == nil {
+		scanner := bufio.NewScanner(file)
 
-        for scanner.Scan() {
-            words = append(words, strings.Split(scanner.Text(), ",")...)
-        }
-    }
+		for scanner.Scan() {
+			words = append(words, strings.Split(scanner.Text(), ",")...)
+		}
+	}
 
-    return words
+	return words
 }
 
 func IsTriangleNum(n int) bool {
-    nthTriangle := (math.Sqrt(float64(1 + 8 * n)) - 1) / 2
+	nthTriangle := (math.Sqrt(float64(1+8*n)) - 1) / 2
 
-    if nthTriangle == float64(int(nthTriangle)) {
-        return true
-    }
+	if nthTriangle == float64(int(nthTriangle)) {
+		return true
+	}
 
-    return false
+	return false
 }
 
 func IsTriangleWord(s string) bool {
-    sum := 0
+	sum := 0
 
-    for _, c := range s {
-        sum += int(c) - 96
-    }
+	for _, c := range s {
+		sum += int(c) - 96
+	}
 
-    return IsTriangleNum(sum)
+	return IsTriangleNum(sum)
 }
 
 func main() {
-    count := 0
+	count := 0
 
-    for _, word := range ReadWords("p042_words.txt") {
-        word = strings.ToLower(word)
-        word = strings.Trim(word, "\"")
+	for _, word := range ReadWords("p042_words.txt") {
+		word = strings.ToLower(word)
+		word = strings.Trim(word, "\"")
 
-        if IsTriangleWord(word) {
-            count++
-        }
-    }
+		if IsTriangleWord(word) {
+			count++
+		}
+	}
 
-    fmt.Println(count)
+	fmt.Println(count)
 }

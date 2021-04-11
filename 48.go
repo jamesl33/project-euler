@@ -18,18 +18,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package main
 
 import (
-    "fmt"
-    "math/big"
+	"fmt"
+	"math/big"
 )
 
 func main() {
-    sum := big.NewInt(int64(0))
+	sum := big.NewInt(int64(0))
 
-    for i := 1; i <= 1000; i++ {
-        next := big.NewInt(int64(i))
-        next = next.Exp(big.NewInt(int64(i)), big.NewInt(int64(i)), nil)
-        sum = sum.Add(sum, next)
-    }
+	for i := 1; i <= 1000; i++ {
+		next := big.NewInt(int64(i))
+		next = next.Exp(big.NewInt(int64(i)), big.NewInt(int64(i)), nil)
+		sum = sum.Add(sum, next)
+	}
 
-    fmt.Println(sum.String()[len(sum.String()) - 10:])
+	fmt.Println(sum.String()[len(sum.String())-10:])
 }

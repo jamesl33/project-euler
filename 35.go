@@ -18,70 +18,70 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package main
 
 import (
-    "fmt"
-    "strconv"
-    "strings"
+	"fmt"
+	"strconv"
+	"strings"
 )
 
 func IsPrime(n int) bool {
-    if n <= 1 {
-        return false
-    } else if n <= 3 {
-        return true
-    } else if n % 2 == 0 || n % 3 == 0 {
-        return false
-    }
+	if n <= 1 {
+		return false
+	} else if n <= 3 {
+		return true
+	} else if n%2 == 0 || n%3 == 0 {
+		return false
+	}
 
-    i := 5
+	i := 5
 
-    for i * i <= n {
-        if n % i == 0 || n % (i + 2) == 0 {
-            return false
-        }
+	for i*i <= n {
+		if n%i == 0 || n%(i+2) == 0 {
+			return false
+		}
 
-        i += 6
-    }
+		i += 6
+	}
 
-    return true
+	return true
 }
 
 func Reverse(slice *[]string, begin int, end int) {
-    for left, right := begin, end; left < right; left, right = left+1, right-1 {
-	(*slice)[left], (*slice)[right] = (*slice)[right], (*slice)[left]
-    }
+	for left, right := begin, end; left < right; left, right = left+1, right-1 {
+		(*slice)[left], (*slice)[right] = (*slice)[right], (*slice)[left]
+	}
 }
 
 func Rotate(n int) func() int {
-    slice := strings.Split(strconv.Itoa(n), "")
+	slice := strings.Split(strconv.Itoa(n), "")
 
-    return func() int {
-        Reverse(&slice, 0, 0)
-        Reverse(&slice, 1, len(slice) - 1)
-        Reverse(&slice, 0, len(slice) - 1)
+	return func() int {
+		Reverse(&slice, 0, 0)
+		Reverse(&slice, 1, len(slice)-1)
+		Reverse(&slice, 0, len(slice)-1)
 
-        rotation, _ := strconv.Atoi(strings.Join(slice, ""))
-        return rotation
-    }
+		rotation, _ := strconv.Atoi(strings.Join(slice, ""))
+		return rotation
+	}
 }
 
 func main() {
-    count := 0
+	count := 0
 
-    for i := 0; i < 1000000; i++ {
-        is_circular_prime := true
-        rotate := Rotate(i)
+	for i := 0; i < 1000000; i++ {
+		is_circular_prime := true
+		rotate := Rotate(i)
 
-        for r := 0; r < len(strconv.Itoa(i)); r++ {
-            if !IsPrime(rotate()) {
-                is_circular_prime = false
-                break
-            }
-        }
+		for r := 0; r < len(strconv.Itoa(i)); r++ {
+			if !IsPrime(rotate()) {
+				is_circular_prime = false
+				break
+			}
+		}
 
-        if is_circular_prime {
-            count++
-        }
-    }
+		if is_circular_prime {
+			count++
+		}
+	}
 
-    fmt.Println(count)
+	fmt.Println(count)
 }

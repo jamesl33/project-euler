@@ -39,14 +39,14 @@ import "fmt"
 // }
 
 func main() {
-    sum := 0
+	sum := 0
 
-    for i := 1; i * i <= 1001 * 1001; i += 2 {
-        for w := 0; w < 4; w++ {
-            sum += (i * i) - ((i - 1) * w)
-        }
-    }
+	for i := 1; i*i <= 1001*1001; i += 2 {
+		for w := 0; w < 4; w++ {
+			sum += (i * i) - ((i - 1) * w)
+		}
+	}
 
-    // minus 3 because centre '1' will be processed 4 times overall
-    fmt.Println(sum - 3)
+	// minus 3 because centre '1' will be processed 4 times overall
+	fmt.Println(sum - 3)
 }

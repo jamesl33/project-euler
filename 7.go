@@ -18,43 +18,43 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package main
 
 import (
-    "fmt"
-    "math"
+	"fmt"
+	"math"
 )
 
 func EratosthenesSieve(n int) []int {
-    upperBound := 100
+	upperBound := 100
 
-    if n > 6 {
-        t := float64(n)
-        upperBound = int(math.Ceil(t * (math.Log(t) + math.Log(math.Log(t)))))
-    }
+	if n > 6 {
+		t := float64(n)
+		upperBound = int(math.Ceil(t * (math.Log(t) + math.Log(math.Log(t)))))
+	}
 
-    sieve := make([]bool, upperBound)
+	sieve := make([]bool, upperBound)
 
-    for i := 0; i < upperBound; i++ {
-        sieve[i] = true
-    }
+	for i := 0; i < upperBound; i++ {
+		sieve[i] = true
+	}
 
-    for i := 2; i < upperBound; i++ {
-        if sieve[i] {
-            for j := i * i; j < upperBound; j += i {
-                sieve[j] = false
-            }
-        }
-    }
+	for i := 2; i < upperBound; i++ {
+		if sieve[i] {
+			for j := i * i; j < upperBound; j += i {
+				sieve[j] = false
+			}
+		}
+	}
 
-    var primes []int
+	var primes []int
 
-    for i := 0; i < upperBound; i++ {
-        if sieve[i] {
-            primes = append(primes, i)
-        }
-    }
+	for i := 0; i < upperBound; i++ {
+		if sieve[i] {
+			primes = append(primes, i)
+		}
+	}
 
-    return primes[2:n + 2]
+	return primes[2 : n+2]
 }
 
 func main() {
-    fmt.Println(EratosthenesSieve(10001)[10000])
+	fmt.Println(EratosthenesSieve(10001)[10000])
 }

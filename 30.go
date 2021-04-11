@@ -18,29 +18,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package main
 
 import (
-    "fmt"
-    "math"
-    "strconv"
+	"fmt"
+	"math"
+	"strconv"
 )
 
 func SumFifthPower(n int) int {
-    sum := 0
+	sum := 0
 
-    for _, c := range strconv.Itoa(n) {
-        sum += int(math.Pow(float64(c - '0'), float64(5)))
-    }
+	for _, c := range strconv.Itoa(n) {
+		sum += int(math.Pow(float64(c-'0'), float64(5)))
+	}
 
-    return sum
+	return sum
 }
 
 func main() {
-    sum := 0
+	sum := 0
 
-    for i := 64; i < 295245; i++ {
-        if i == SumFifthPower(i) {
-            sum += i
-        }
-    }
+	for i := 64; i < 295245; i++ {
+		if i == SumFifthPower(i) {
+			sum += i
+		}
+	}
 
-    fmt.Println(sum)
+	fmt.Println(sum)
 }

@@ -18,20 +18,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package main
 
 import (
-    "fmt"
-    "math/big"
+	"fmt"
+	"math/big"
 )
 
 func main() {
-    var result big.Int
-    result.Exp(big.NewInt(2), big.NewInt(1000), nil)
-    resString := result.String()
+	var result big.Int
+	result.Exp(big.NewInt(2), big.NewInt(1000), nil)
+	resString := result.String()
 
-    total := 0
+	total := 0
 
-    for _, char := range resString {
-        total += int(char - '0')
-    }
+	for _, char := range resString {
+		total += int(char - '0')
+	}
 
-    fmt.Println(total)
+	fmt.Println(total)
 }

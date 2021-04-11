@@ -59,50 +59,50 @@ package main
 import "fmt"
 
 type Coord struct {
-    x, y int
+	x, y int
 }
 
 func main() {
-    gridSize := 20
-    grid := make([][]int, gridSize + 1)
+	gridSize := 20
+	grid := make([][]int, gridSize+1)
 
-    for index, _ := range grid {
-        grid[index] = make([]int, gridSize + 1)
-    }
+	for index := range grid {
+		grid[index] = make([]int, gridSize+1)
+	}
 
-    grid[gridSize][gridSize] = 1
+	grid[gridSize][gridSize] = 1
 
-    queue := make([]Coord, 0)
-    queue = append(queue, Coord{gridSize - 1, gridSize})
-    queue = append(queue, Coord{gridSize, gridSize - 1})
+	queue := make([]Coord, 0)
+	queue = append(queue, Coord{gridSize - 1, gridSize})
+	queue = append(queue, Coord{gridSize, gridSize - 1})
 
-    for len(queue) != 0 {
-        var current Coord
+	for len(queue) != 0 {
+		var current Coord
 
-        current, queue = queue[0], queue[1:]
+		current, queue = queue[0], queue[1:]
 
-        if grid[current.x][current.y] == 0 {
-            numRoutes := 0;
+		if grid[current.x][current.y] == 0 {
+			numRoutes := 0
 
-            if current.x < gridSize {
-                numRoutes += grid[current.x + 1][current.y]
-            }
+			if current.x < gridSize {
+				numRoutes += grid[current.x+1][current.y]
+			}
 
-            if current.y < gridSize {
-                numRoutes += grid[current.x][current.y + 1]
-            }
+			if current.y < gridSize {
+				numRoutes += grid[current.x][current.y+1]
+			}
 
-            grid[current.x][current.y] = numRoutes
+			grid[current.x][current.y] = numRoutes
 
-            if current.x > 0 {
-                queue = append(queue, Coord{current.x - 1, current.y})
-            }
+			if current.x > 0 {
+				queue = append(queue, Coord{current.x - 1, current.y})
+			}
 
-            if current.y > 0 {
-                queue = append(queue, Coord{current.x, current.y - 1})
-            }
-        }
-    }
+			if current.y > 0 {
+				queue = append(queue, Coord{current.x, current.y - 1})
+			}
+		}
+	}
 
-    fmt.Println(grid[0][0])
+	fmt.Println(grid[0][0])
 }
