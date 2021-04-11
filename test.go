@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -29,9 +28,9 @@ func SourceSolutions(ctx context.Context, root string) <-chan Solution {
 	go func() {
 		defer close(solutions)
 
-		files, err := ioutil.ReadDir(root)
+		files, err := os.ReadDir(root)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalf("failed to list directory contents: %v", err)
 		}
 
 		for _, file := range files {
@@ -42,9 +41,9 @@ func SourceSolutions(ctx context.Context, root string) <-chan Solution {
 			problemNumber, _ := strconv.Atoi(file.Name()[:len(file.Name())-len(path.Ext(file.Name()))])
 
 			select {
+			case solutions <- Solution{Path: file.Name(), Problem: problemNumber}:
 			case <-ctx.Done():
 				return
-			case solutions <- Solution{Path: file.Name(), Problem: problemNumber}:
 			}
 		}
 	}()
@@ -52,33 +51,31 @@ func SourceSolutions(ctx context.Context, root string) <-chan Solution {
 	return solutions
 }
 
-func RunSolutions(ctx context.Context, unprocessedSolutions <-chan Solution) <-chan Solution {
-	solutions := make(chan Solution)
-
+func RunSolutions(ctx context.Context, unprocessed <-chan Solution) <-chan Solution {
 	numWorkers := runtime.GOMAXPROCS(0)
 	var wg sync.WaitGroup
 	wg.Add(numWorkers)
 
+	solutions := make(chan Solution)
+
 	for i := 0; i < numWorkers; i++ {
 		go func() {
-			for solution := range unprocessedSolutions {
-				cmd := exec.Command("go", "run", solution.Path)
+			defer wg.Done()
 
-				answer, err := cmd.Output()
+			for solution := range unprocessed {
+				answer, err := exec.Command("go", "run", solution.Path).CombinedOutput()
 				if err != nil {
-					log.Fatal(err)
+					log.Fatalf("failed to run solution %d: %v", solution.Problem, err)
 				}
 
 				solution.Answer = string(bytes.TrimSuffix(answer, []byte{'\n'}))
 
 				select {
-				case <-ctx.Done():
-					break
 				case solutions <- solution:
+				case <-ctx.Done():
+					return
 				}
 			}
-
-			wg.Done()
 		}()
 	}
 
@@ -90,53 +87,53 @@ func RunSolutions(ctx context.Context, unprocessedSolutions <-chan Solution) <-c
 	return solutions
 }
 
-func FetchAnswers(n int) []string {
-	var answers []string
-
+func FetchAnswers() []string {
 	file, err := os.Open("answers.txt")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("failed to open 'answer.txt': %v", err)
 	}
 
-	scanner := bufio.NewScanner(file)
+	var (
+		answers []string
+		scanner = bufio.NewScanner(file)
+	)
 
-	for i := 0; i < n; i++ {
-		scanner.Scan()
+	for scanner.Scan() {
 		answers = append(answers, scanner.Text())
+	}
+
+	if err := scanner.Err(); err != nil {
+		log.Fatalf("failed to read answers: %v", err)
 	}
 
 	return answers
 }
 
 func main() {
-	// TODO - Allow running a single problem supplied by an argument
 	start := time.Now()
 
 	ctx, cancelFunc := context.WithCancel(context.Background())
 	defer cancelFunc()
 
-	var solutions []Solution
+	var (
+		solutions []Solution
+		answers   = FetchAnswers()
+	)
 
-	unprocessedSolutionsStream := SourceSolutions(ctx, ".")
-	processedSolutionsStream := RunSolutions(ctx, unprocessedSolutionsStream)
-
-	for solution := range processedSolutionsStream {
+	for solution := range RunSolutions(ctx, SourceSolutions(ctx, ".")) {
 		solutions = append(solutions, solution)
 	}
 
-	sort.Slice(solutions, func(i, j int) bool {
-		return solutions[i].Problem < solutions[j].Problem
-	})
+	sort.Slice(solutions, func(i, j int) bool { return solutions[i].Problem < solutions[j].Problem })
 
-	answers := FetchAnswers(len(solutions))
-
-	for i := 0; i < len(solutions); i++ {
+	for _, solution := range solutions {
 		correctness := "correct"
-		if solutions[i].Answer != answers[i] {
+		if solution.Answer != answers[solution.Problem-1] {
 			correctness = "incorrect"
 		}
 
-		fmt.Printf("Problem %03d: Output is %s '%s == %s'\n", solutions[i].Problem, correctness, solutions[i].Answer, answers[i])
+		fmt.Printf("Problem %03d: Output is %s '%s == %s'\n", solution.Problem, correctness, solution.Answer,
+			answers[solution.Problem-1])
 	}
 
 	fmt.Printf("Completed in: %v\n", time.Since(start))
