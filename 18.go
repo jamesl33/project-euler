@@ -2,16 +2,16 @@ package main
 
 import "fmt"
 
-func Max(a, b int) int {
+func max(a, b int) int {
 	if a < b {
 		return b
-	} else {
-		return a
 	}
+
+	return a
 }
 
 func main() {
-	pyrimid := [][]int{
+	triangle := [][]int{
 		{75},
 		{95, 64},
 		{17, 47, 82},
@@ -29,11 +29,11 @@ func main() {
 		{04, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 04, 23},
 	}
 
-	for i := len(pyrimid) - 2; i >= 0; i-- {
-		for j := 0; j < len(pyrimid[i]); j++ {
-			pyrimid[i][j] += Max(pyrimid[i+1][j], pyrimid[i+1][j+1])
+	for i := len(triangle) - 2; i >= 0; i-- {
+		for j := 0; j < len(triangle[i]); j++ {
+			triangle[i][j] += max(triangle[i+1][j], triangle[i+1][j+1])
 		}
 	}
 
-	fmt.Println(pyrimid[0][0])
+	fmt.Println(triangle[0][0])
 }

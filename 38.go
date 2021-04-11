@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func Contains(s string, c rune) bool {
+func contains(s string, c rune) bool {
 	for _, e := range s {
 		if e == c {
 			return true
@@ -16,9 +16,9 @@ func Contains(s string, c rune) bool {
 	return false
 }
 
-func IsPandigital(s string) bool {
+func isPandigital(s string) bool {
 	for i := 1; i <= 9; i++ {
-		if !Contains(s, []rune(strconv.Itoa(i))[0]) {
+		if !contains(s, []rune(strconv.Itoa(i))[0]) {
 			return false
 		}
 	}
@@ -26,7 +26,7 @@ func IsPandigital(s string) bool {
 	return true
 }
 
-func ConcatenatedProduct(n, c int) string {
+func concatenatedProduct(n, c int) string {
 	var products []int
 
 	for i := 1; i <= c; i++ {
@@ -40,9 +40,9 @@ func main() {
 	largest := 0
 
 	for i := 9000; i < 10000; i++ {
-		c := ConcatenatedProduct(i, 2)
+		c := concatenatedProduct(i, 2)
 
-		if IsPandigital(c) {
+		if isPandigital(c) {
 			ci, _ := strconv.Atoi(c)
 
 			if largest < ci {

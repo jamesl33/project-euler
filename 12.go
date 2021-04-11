@@ -28,9 +28,9 @@ func divisors(n int) []int {
 func triangle(n int) int {
 	if n == 1 {
 		return 1
-	} else {
-		return n + triangle(n-1)
 	}
+
+	return n + triangle(n-1)
 }
 
 func main() {

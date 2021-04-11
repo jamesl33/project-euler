@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func is_prime(n int) bool {
+func isPrime(n int) bool {
 	if n <= 1 {
 		return false
 	} else if n <= 3 {
@@ -25,25 +25,25 @@ func is_prime(n int) bool {
 }
 
 func main() {
-	longest_consecutive_primes := 0
-	max_a := 0
-	max_b := 0
+	lcp := 0
+	maxA := 0
+	maxB := 0
 
 	for a := -1000; a < 1000; a++ {
 		for b := -1000; b <= 1000; b++ {
-			consecutive_primes := 0
+			cp := 0
 
-			for is_prime((consecutive_primes * consecutive_primes) + (a * consecutive_primes) + b) {
-				consecutive_primes++
+			for isPrime((cp * cp) + (a * cp) + b) {
+				cp++
 			}
 
-			if consecutive_primes > longest_consecutive_primes {
-				longest_consecutive_primes = consecutive_primes
-				max_a = a
-				max_b = b
+			if cp > lcp {
+				lcp = cp
+				maxA = a
+				maxB = b
 			}
 		}
 	}
 
-	fmt.Println(max_a * max_b)
+	fmt.Println(maxA * maxB)
 }

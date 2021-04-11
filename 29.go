@@ -5,16 +5,6 @@ import (
 	"math/big"
 )
 
-func contains(slice []big.Int, n *big.Int) bool {
-	for _, e := range slice {
-		if e.Cmp(n) == 0 {
-			return true
-		}
-	}
-
-	return false
-}
-
 func main() {
 	var powers []big.Int
 
@@ -26,13 +16,15 @@ func main() {
 		}
 	}
 
-	var unique_powers []big.Int
+	unique := make(map[string]struct{})
 
 	for _, p := range powers {
-		if !contains(unique_powers, &p) {
-			unique_powers = append(unique_powers, p)
+		if _, ok := unique[p.String()]; ok {
+			continue
 		}
+
+		unique[p.String()] = struct{}{}
 	}
 
-	fmt.Println(len(unique_powers))
+	fmt.Println(len(unique))
 }

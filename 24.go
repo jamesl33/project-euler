@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func GenPermutations(str string) []string {
+func generatePermutations(str string) []string {
 	var helper func(sli []string, ind int)
 
 	var permutations []string
@@ -33,7 +33,7 @@ func GenPermutations(str string) []string {
 }
 
 func main() {
-	permutations := GenPermutations("0123456789")
+	permutations := generatePermutations("0123456789")
 	sort.Slice(permutations, func(i, j int) bool { return permutations[i] < permutations[j] })
 	fmt.Println(permutations[1000000-1])
 }

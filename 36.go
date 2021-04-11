@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func Reverse(s string) string {
+func reverse(s string) string {
 	c := []rune(s)
 
 	for left, right := 0, len(s)-1; left < right; left, right = left+1, right-1 {
@@ -15,8 +15,8 @@ func Reverse(s string) string {
 	return string(c)
 }
 
-func IsPalindrome(s string) bool {
-	return s == Reverse(s)
+func isPalindrome(s string) bool {
+	return s == reverse(s)
 }
 
 func main() {
@@ -25,7 +25,7 @@ func main() {
 	for i := 0; i < 1000000; i++ {
 		b2, b10 := fmt.Sprintf("%b", i), strconv.Itoa(i)
 
-		if IsPalindrome(b2) && IsPalindrome(b10) {
+		if isPalindrome(b2) && isPalindrome(b10) {
 			sum += i
 		}
 	}

@@ -3,21 +3,14 @@ package main
 import "fmt"
 
 func isLeapYear(year int) bool {
-	if year%4 == 0 {
-		if year%100 == 0 && year%400 != 0 {
-			return false
-		}
-
-		return true
-	}
-
-	return false
+	return year%4 == 0 && !(year%100 == 0 && year%400 != 0)
 }
 
 func main() {
-	currentDay := 0
-	totalSundays := 0
-	months := []int{31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
+	var (
+		currentDay, totalSundays int
+		months                   = []int{31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
+	)
 
 	for year := 1901; year <= 2000; year++ {
 		for _, monthDays := range months {

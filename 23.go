@@ -5,21 +5,25 @@ import (
 	"math"
 )
 
-func RemoveDuplicates(slice []int) []int {
-	known := map[int]bool{}
-	result := []int{}
+func removeDuplicates(slice []int) []int {
+	var (
+		known  = make(map[int]struct{})
+		result = make([]int, 0)
+	)
 
 	for _, value := range slice {
-		if !known[value] {
-			known[value] = true
-			result = append(result, value)
+		if _, ok := known[value]; ok {
+			continue
 		}
+
+		known[value] = struct{}{}
+		result = append(result, value)
 	}
 
 	return result
 }
 
-func Divisors(n int) []int {
+func divisors(n int) []int {
 	var divisors []int
 	limit := int(math.Sqrt(float64(n)))
 
@@ -36,10 +40,10 @@ func Divisors(n int) []int {
 		}
 	}
 
-	return RemoveDuplicates(divisors)
+	return removeDuplicates(divisors)
 }
 
-func Sum(s []int) int {
+func sum(s []int) int {
 	total := 0
 
 	for _, item := range s {
@@ -49,11 +53,11 @@ func Sum(s []int) int {
 	return total
 }
 
-func GenAbundantNumbers() []int {
+func generateAbundantNumbers() []int {
 	var abundantNumbers []int
 
 	for i := 0; i < 28123; i++ {
-		if Sum(Divisors(i)) > i {
+		if sum(divisors(i)) > i {
 			abundantNumbers = append(abundantNumbers, i)
 		}
 	}
@@ -62,7 +66,7 @@ func GenAbundantNumbers() []int {
 }
 
 func main() {
-	abundantNumbers := GenAbundantNumbers()
+	abundantNumbers := generateAbundantNumbers()
 	var expressible [28123]bool
 
 	for _, i := range abundantNumbers {

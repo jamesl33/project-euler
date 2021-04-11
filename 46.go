@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-func EratosthenesSieve(n int) ([]int, []int) {
+func eratosthenesSieve(n int) ([]int, []int) {
 	upperBound := 100
 
 	if n > 6 {
@@ -27,8 +27,10 @@ func EratosthenesSieve(n int) ([]int, []int) {
 		}
 	}
 
-	var composites []int
-	var primes []int
+	var (
+		composites []int
+		primes     []int
+	)
 
 	for i := 0; i < upperBound; i++ {
 		if sieve[i] {
@@ -43,7 +45,7 @@ func EratosthenesSieve(n int) ([]int, []int) {
 	return composites, primes[2 : n+2]
 }
 
-func FitsGoldbach(n int, primes []int) bool {
+func fitsGoldbach(n int, primes []int) bool {
 	for _, prime := range primes {
 		if prime >= n {
 			return false
@@ -62,10 +64,10 @@ func FitsGoldbach(n int, primes []int) bool {
 }
 
 func main() {
-	composites, primes := EratosthenesSieve(10000)
+	composites, primes := eratosthenesSieve(10000)
 
 	for _, composite := range composites {
-		if !FitsGoldbach(composite, primes) {
+		if !fitsGoldbach(composite, primes) {
 			fmt.Println(composite)
 			return
 		}

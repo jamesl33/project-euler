@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func IsPrime(n int) bool {
+func isPrime(n int) bool {
 	if n <= 1 {
 		return false
 	} else if n <= 3 {
@@ -26,7 +26,7 @@ func IsPrime(n int) bool {
 	return true
 }
 
-func EratosthenesSieve(lowerBound, upperBound int) []int {
+func eratosthenesSieve(lowerBound, upperBound int) []int {
 	sieve := make([]bool, upperBound)
 
 	for i := 0; i < upperBound; i++ {
@@ -52,7 +52,7 @@ func EratosthenesSieve(lowerBound, upperBound int) []int {
 	return primes
 }
 
-func Contains(s []int, e int) bool {
+func contains(s []int, e int) bool {
 	for i := 0; i < len(s); i++ {
 		if s[i] == e {
 			return true
@@ -63,15 +63,16 @@ func Contains(s []int, e int) bool {
 }
 
 func main() {
-	primes := EratosthenesSieve(0, 1000000)
-	sumPrimes := append(primes[:0:0], primes...)
+	var (
+		primes    = eratosthenesSieve(0, 1000000)
+		sumPrimes = append(primes[:0:0], primes...)
+	)
 
 	for i := 1; i < len(sumPrimes); i++ {
 		sumPrimes[i] = sumPrimes[i-1] + primes[i]
 	}
 
-	largestConsecutive := 0
-	largestPrime := 0
+	var largestConsecutive, largestPrime int
 
 	for i := 0; i < len(primes); i++ {
 		if i > len(primes)-largestConsecutive {
@@ -85,7 +86,7 @@ func main() {
 				break
 			}
 
-			if !IsPrime(sum) {
+			if !isPrime(sum) {
 				continue
 			}
 

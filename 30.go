@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func SumFifthPower(n int) int {
+func sumFifthPower(n int) int {
 	sum := 0
 
 	for _, c := range strconv.Itoa(n) {
@@ -20,7 +20,7 @@ func main() {
 	sum := 0
 
 	for i := 64; i < 295245; i++ {
-		if i == SumFifthPower(i) {
+		if i == sumFifthPower(i) {
 			sum += i
 		}
 	}

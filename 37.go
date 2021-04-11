@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func IsPrime(n int) bool {
+func isPrime(n int) bool {
 	if n <= 1 {
 		return false
 	} else if n <= 3 {
@@ -27,11 +27,11 @@ func IsPrime(n int) bool {
 	return true
 }
 
-func IsLeftTruncatablePrime(s string) bool {
+func isLeftTruncatablePrime(s string) bool {
 	for i := 0; i < len(s); i++ {
 		n, _ := strconv.Atoi(s[i:])
 
-		if !IsPrime(n) {
+		if !isPrime(n) {
 			return false
 		}
 	}
@@ -39,11 +39,11 @@ func IsLeftTruncatablePrime(s string) bool {
 	return true
 }
 
-func IsRightTruncatablePrime(s string) bool {
+func isRightTruncatablePrime(s string) bool {
 	for i := len(s); i > 0; i-- {
 		n, _ := strconv.Atoi(s[0:i])
 
-		if !IsPrime(n) {
+		if !isPrime(n) {
 			return false
 		}
 	}
@@ -51,15 +51,18 @@ func IsRightTruncatablePrime(s string) bool {
 	return true
 }
 
-func IsTruncatablePrime(n int) bool {
-	return IsLeftTruncatablePrime(strconv.Itoa(n)) && IsRightTruncatablePrime(strconv.Itoa(n))
+func isTruncatablePrime(n int) bool {
+	return isLeftTruncatablePrime(strconv.Itoa(n)) && isRightTruncatablePrime(strconv.Itoa(n))
 }
 
 func main() {
-	sum, count, current := 0, 0, 8
+	var (
+		sum, count int
+		current    = 8
+	)
 
 	for count != 11 {
-		if IsTruncatablePrime(current) {
+		if isTruncatablePrime(current) {
 			sum += current
 			count++
 		}

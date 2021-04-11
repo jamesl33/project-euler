@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func Contains(s string, c rune) bool {
+func contains(s string, c rune) bool {
 	for _, e := range s {
 		if e == c {
 			return true
@@ -15,9 +15,9 @@ func Contains(s string, c rune) bool {
 	return false
 }
 
-func IsPandigital(s string) bool {
+func isPandigital(s string) bool {
 	for i := 1; i <= len(s); i++ {
-		if !Contains(s, []rune(strconv.Itoa(i))[0]) {
+		if !contains(s, []rune(strconv.Itoa(i))[0]) {
 			return false
 		}
 	}
@@ -25,7 +25,7 @@ func IsPandigital(s string) bool {
 	return true
 }
 
-func IsPrime(n int) bool {
+func isPrime(n int) bool {
 	if n <= 1 {
 		return false
 	} else if n <= 3 {
@@ -49,7 +49,7 @@ func IsPrime(n int) bool {
 
 func main() {
 	for i := 7654321; i > 0; i-- {
-		if IsPandigital(strconv.Itoa(i)) && IsPrime(i) {
+		if isPandigital(strconv.Itoa(i)) && isPrime(i) {
 			fmt.Println(i)
 			return
 		}

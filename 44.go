@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-func IsPentagonal(n float64) bool {
+func isPentagonal(n float64) bool {
 	nthPentagonal := (math.Sqrt(1+(24*n)) + 1) / 6
 	return nthPentagonal == math.Trunc(nthPentagonal)
 }
@@ -17,11 +17,7 @@ func main() {
 		for j := i - 1; j > 0; j-- {
 			m := j * ((3 * j) - 1) / 2
 
-			if !IsPentagonal(float64(n - m)) {
-				continue
-			}
-
-			if !IsPentagonal(float64(n + m)) {
+			if !isPentagonal(float64(n-m)) || !isPentagonal(float64(n+m)) {
 				continue
 			}
 

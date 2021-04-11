@@ -5,11 +5,11 @@ import (
 	"math"
 )
 
-type Tuple struct {
+type tuple struct {
 	a, b int
 }
 
-func Divisors(n int) []int {
+func divisors(n int) []int {
 	var divisors []int
 	limit := int(math.Sqrt(float64(n)))
 
@@ -29,7 +29,7 @@ func Divisors(n int) []int {
 	return divisors
 }
 
-func Sum(s []int) int {
+func sum(s []int) int {
 	total := 0
 
 	for _, item := range s {
@@ -39,14 +39,14 @@ func Sum(s []int) int {
 	return total
 }
 
-func GenAmicablePairs(n int) []Tuple {
-	var amicablePairs []Tuple
+func generateAmicablePairs(n int) []tuple {
+	var amicablePairs []tuple
 
 	for x := 1; x <= n; x++ {
-		y := Sum(Divisors(x))
+		y := sum(divisors(x))
 
-		if y > x && x == Sum(Divisors(y)) {
-			amicablePairs = append(amicablePairs, Tuple{x, y})
+		if y > x && x == sum(divisors(y)) {
+			amicablePairs = append(amicablePairs, tuple{x, y})
 		}
 	}
 
@@ -56,7 +56,7 @@ func GenAmicablePairs(n int) []Tuple {
 func main() {
 	total := 0
 
-	for _, tuple := range GenAmicablePairs(10000) {
+	for _, tuple := range generateAmicablePairs(10000) {
 		total += tuple.a
 		total += tuple.b
 	}

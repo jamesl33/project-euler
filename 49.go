@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func EratosthenesSieve(lowerBound, upperBound int) []int {
+func eratosthenesSieve(lowerBound, upperBound int) []int {
 	sieve := make([]bool, upperBound)
 
 	for i := 2; i < int(math.Sqrt(float64(upperBound))); i++ {
@@ -29,15 +29,13 @@ func EratosthenesSieve(lowerBound, upperBound int) []int {
 	return primes
 }
 
-func ArePermutations(s ...string) bool {
+func arePermutations(s ...string) bool {
 	var sorted []string
 
 	for _, str := range s {
 		runeStr := []rune(str)
 
-		sort.Slice(runeStr, func(i, j int) bool {
-			return runeStr[i] < runeStr[j]
-		})
+		sort.Slice(runeStr, func(i, j int) bool { return runeStr[i] < runeStr[j] })
 
 		sorted = append(sorted, string(runeStr))
 	}
@@ -51,7 +49,7 @@ func ArePermutations(s ...string) bool {
 	return true
 }
 
-func Contains(s []int, n int) bool {
+func contains(s []int, n int) bool {
 	for _, e := range s {
 		if e == n {
 			return true
@@ -62,19 +60,19 @@ func Contains(s []int, n int) bool {
 }
 
 func main() {
-	primes := EratosthenesSieve(1487, 10000)
+	primes := eratosthenesSieve(1487, 10000)
 
 	for i := 0; i < len(primes); i++ {
 		for j := i + 1; j < len(primes); j++ {
 			i, j, k := primes[i], primes[j], primes[j]+(primes[j]-primes[i])
 
-			if k > 10000 || !Contains(primes, k) {
+			if k > 10000 || !contains(primes, k) {
 				continue
 			}
 
 			si, sj, sk := strconv.Itoa(i), strconv.Itoa(j), strconv.Itoa(k)
 
-			if !ArePermutations(si, sj, sk) {
+			if !arePermutations(si, sj, sk) {
 				continue
 			}
 

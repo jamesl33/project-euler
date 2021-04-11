@@ -2,10 +2,12 @@ package main
 
 import "fmt"
 
-func cycle_length(n int) int {
-	numbers := make([]int, n)
-	divisor := 1
-	index := 0
+func cycleLength(n int) int {
+	var (
+		numbers = make([]int, n)
+		divisor = 1
+		index   int
+	)
 
 	for numbers[divisor] == 0 && divisor != 0 {
 		numbers[divisor] = index
@@ -17,15 +19,15 @@ func cycle_length(n int) int {
 }
 
 func main() {
-	largest_cycle := 0
+	largest := 0
 
 	for i := 1000; i > 1; i-- {
-		cycle_len := cycle_length(i)
+		length := cycleLength(i)
 
-		if cycle_len > largest_cycle {
-			largest_cycle = cycle_len
+		if length > largest {
+			largest = length
 		}
 	}
 
-	fmt.Println(largest_cycle + 1)
+	fmt.Println(largest + 1)
 }

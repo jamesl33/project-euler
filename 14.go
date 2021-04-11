@@ -6,9 +6,10 @@ func main() {
 	collatz := [][]int{}
 
 	for i := 1; i <= 1000000; i++ {
-		sequence := []int{}
-
-		n := i
+		var (
+			n        = i
+			sequence = make([]int, 0)
+		)
 
 		for n != 1 {
 			if n%2 == 0 {

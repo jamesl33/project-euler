@@ -3,13 +3,12 @@ package main
 import "fmt"
 
 func main() {
-	sum := 0
-	sum_squares := 0
+	var sum, sumSquares int
 
 	for i := 1; i <= 100; i++ {
 		sum += i
-		sum_squares += i * i
+		sumSquares += i * i
 	}
 
-	fmt.Println((sum * sum) - sum_squares)
+	fmt.Println((sum * sum) - sumSquares)
 }

@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func Factorial(n int) int {
+func factorial(n int) int {
 	f := []int{1}
 
 	for i := 2; i <= n; i++ {
@@ -15,12 +15,12 @@ func Factorial(n int) int {
 	return f[len(f)-1]
 }
 
-func IsCurious(n int) bool {
+func isCurious(n int) bool {
 	sum := 0
 
 	for _, c := range strconv.Itoa(n) {
 		ci, _ := strconv.Atoi(string(c))
-		sum += Factorial(ci)
+		sum += factorial(ci)
 	}
 
 	return sum == n
@@ -29,8 +29,8 @@ func IsCurious(n int) bool {
 func main() {
 	sum := 0
 
-	for n := 3; n <= Factorial(9)*7; n++ {
-		if IsCurious(n) {
+	for n := 3; n <= factorial(9)*7; n++ {
+		if isCurious(n) {
 			sum += n
 		}
 	}

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func IsPrime(n int) bool {
+func isPrime(n int) bool {
 	if n <= 1 {
 		return false
 	} else if n <= 3 {
@@ -28,19 +28,19 @@ func IsPrime(n int) bool {
 	return true
 }
 
-func Reverse(slice *[]string, begin int, end int) {
+func reverse(slice []string, begin int, end int) {
 	for left, right := begin, end; left < right; left, right = left+1, right-1 {
-		(*slice)[left], (*slice)[right] = (*slice)[right], (*slice)[left]
+		slice[left], slice[right] = slice[right], slice[left]
 	}
 }
 
-func Rotate(n int) func() int {
+func rotate(n int) func() int {
 	slice := strings.Split(strconv.Itoa(n), "")
 
 	return func() int {
-		Reverse(&slice, 0, 0)
-		Reverse(&slice, 1, len(slice)-1)
-		Reverse(&slice, 0, len(slice)-1)
+		reverse(slice, 0, 0)
+		reverse(slice, 1, len(slice)-1)
+		reverse(slice, 0, len(slice)-1)
 
 		rotation, _ := strconv.Atoi(strings.Join(slice, ""))
 		return rotation
@@ -52,10 +52,10 @@ func main() {
 
 	for i := 0; i < 1000000; i++ {
 		is_circular_prime := true
-		rotate := Rotate(i)
+		rotate := rotate(i)
 
 		for r := 0; r < len(strconv.Itoa(i)); r++ {
-			if !IsPrime(rotate()) {
+			if !isPrime(rotate()) {
 				is_circular_prime = false
 				break
 			}

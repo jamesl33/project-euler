@@ -6,12 +6,12 @@ import (
 	"strings"
 )
 
-type Fraction struct {
+type fraction struct {
 	n, d int
 }
 
-func (this *Fraction) Simplified() *Fraction {
-	GreatestCommonDivisor := func(a, b int) int {
+func (f *fraction) Simplified() *fraction {
+	gcd := func(a, b int) int {
 		for b != 0 {
 			t := b
 			b = a % b
@@ -21,25 +21,25 @@ func (this *Fraction) Simplified() *Fraction {
 		return a
 	}
 
-	gcd := GreatestCommonDivisor(this.n, this.d)
+	d := gcd(f.n, f.d)
 
-	return &Fraction{
-		n: this.n / gcd,
-		d: this.d / gcd,
+	return &fraction{
+		n: f.n / d,
+		d: f.d / d,
 	}
 }
 
-func (this *Fraction) Equals(f Fraction) bool {
-	if *this.Simplified() == *f.Simplified() {
+func (f *fraction) Equals(other fraction) bool {
+	if *f.Simplified() == *other.Simplified() {
 		return true
 	}
 
 	return false
 }
 
-func (this *Fraction) IsCurious() bool {
-	n := strings.Split(strconv.Itoa(this.n), "")
-	d := strings.Split(strconv.Itoa(this.d), "")
+func (f *fraction) IsCurious() bool {
+	n := strings.Split(strconv.Itoa(f.n), "")
+	d := strings.Split(strconv.Itoa(f.d), "")
 
 	for i := 0; i < 2; i++ {
 		for j := 0; j < 2; j++ {
@@ -47,7 +47,7 @@ func (this *Fraction) IsCurious() bool {
 				a, _ := strconv.Atoi(n[i^1])
 				b, _ := strconv.Atoi(d[j^1])
 
-				return this.Equals(Fraction{a, b})
+				return f.Equals(fraction{a, b})
 			}
 		}
 	}
@@ -56,13 +56,12 @@ func (this *Fraction) IsCurious() bool {
 }
 
 func main() {
-	ns := 1
-	ds := 1
+	ns, ds := 1, 1
 
 	for i := 10; i < 100; i++ {
 		for j := 10; j < 100; j++ {
 			if !(i%10 == 0 || j%10 == 0 || i >= j) {
-				f := Fraction{i, j}
+				f := fraction{i, j}
 
 				if f.IsCurious() {
 					ns *= f.n
@@ -72,7 +71,5 @@ func main() {
 		}
 	}
 
-	f := Fraction{ns, ds}
-	f = *f.Simplified()
-	fmt.Println(f.d)
+	fmt.Println((&fraction{ns, ds}).Simplified().d)
 }

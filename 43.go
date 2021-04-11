@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func GenPermutations(str string) []string {
+func generatePermutations(str string) []string {
 	var helper func(sli []string, ind int)
 
 	var permutations []string
@@ -33,7 +33,7 @@ func GenPermutations(str string) []string {
 	return permutations
 }
 
-func IsPandigital(s string) bool {
+func isPandigital(s string) bool {
 	for i := 0; i <= 9; i++ {
 		if !strings.ContainsRune(s, []rune(strconv.Itoa(i))[0]) {
 			return false
@@ -43,7 +43,7 @@ func IsPandigital(s string) bool {
 	return true
 }
 
-func IsSpecialPandigital(s string) bool {
+func isSpecialPandigital(s string) bool {
 	primes := []int{2, 3, 5, 7, 11, 13, 17}
 
 	for i := 1; i < 8; i++ {
@@ -58,12 +58,12 @@ func IsSpecialPandigital(s string) bool {
 }
 
 func main() {
-	permutations := GenPermutations("0123456789")
+	permutations := generatePermutations("0123456789")
 
 	sum := &big.Int{}
 
 	for _, permutation := range permutations {
-		if permutation[0] != '0' && IsPandigital(permutation) && IsSpecialPandigital(permutation) {
+		if permutation[0] != '0' && isPandigital(permutation) && isSpecialPandigital(permutation) {
 			n := &big.Int{}
 			n.SetString(permutation, 10)
 

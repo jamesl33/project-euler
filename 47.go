@@ -4,9 +4,11 @@ import (
 	"fmt"
 )
 
-func DistinctPrimeFactors(n int) []int {
-	primeStatus := make([]bool, n+1)
-	factorCount := make([]int, n+1)
+func distinctPrimeFactors(n int) []int {
+	var (
+		primeStatus = make([]bool, n+1)
+		factorCount = make([]int, n+1)
+	)
 
 	for i := 0; i < n+1; i++ {
 		primeStatus[i] = true
@@ -27,20 +29,22 @@ func DistinctPrimeFactors(n int) []int {
 }
 
 func main() {
-	distinctPrimeFactors := DistinctPrimeFactors(1000000)
+	var (
+		count        int
+		primeFactors = distinctPrimeFactors(1000000)
+	)
 
-	count := 0
-
-	for index, num := range distinctPrimeFactors {
-		if num == 4 {
-			count++
-
-			if count == 4 {
-				fmt.Println(index - 2)
-				return
-			}
-		} else {
+	for index, num := range primeFactors {
+		if num != 4 {
 			count = 0
+			continue
+		}
+
+		count++
+
+		if count == 4 {
+			fmt.Println(index - 2)
+			return
 		}
 	}
 }

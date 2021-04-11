@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-func EratosthenesSieve(n int) []int {
+func eratosthenesSieve(n int) []int {
 	upperBound := 100
 
 	if n > 6 {
@@ -39,5 +39,5 @@ func EratosthenesSieve(n int) []int {
 }
 
 func main() {
-	fmt.Println(EratosthenesSieve(10001)[10000])
+	fmt.Println(eratosthenesSieve(10001)[10000])
 }

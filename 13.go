@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	large_numbers := []string{
+	numbers := []string{
 		"37107287533902102798797998220837590246510135740250",
 		"46376937677490009712648124896970078050417018260538",
 		"74324986199524741059474233309513058123726617309629",
@@ -111,10 +111,10 @@ func main() {
 
 	total := new(big.Int)
 
-	for _, number := range large_numbers {
-		large_num := new(big.Int)
-		large_num.SetString(number, 10)
-		total.Add(total, large_num)
+	for _, number := range numbers {
+		num := new(big.Int)
+		num.SetString(number, 10)
+		total.Add(total, num)
 	}
 
 	fmt.Println(total.String()[:10])

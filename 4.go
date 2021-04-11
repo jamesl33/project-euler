@@ -2,10 +2,11 @@ package main
 
 import "fmt"
 
-func is_palindrome(n int) bool {
-	original := n
-	reversed := 0
-	remainder := 0
+func isPalindrome(n int) bool {
+	var (
+		original            = n
+		reversed, remainder int
+	)
 
 	for n != 0 {
 		remainder = n % 10
@@ -23,7 +24,7 @@ func main() {
 		for j := 100; j < 999; j++ {
 			product := i * j
 
-			if is_palindrome(product) && product > largest {
+			if isPalindrome(product) && product > largest {
 				largest = product
 			}
 		}

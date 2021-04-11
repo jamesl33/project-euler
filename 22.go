@@ -3,15 +3,19 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"sort"
 	"strings"
 )
 
-func LoadNames(fileName string) []string {
+func loadNames() []string {
 	var names []string
 
-	file, _ := os.Open(fileName)
+	file, err := os.Open("p022_names.txt")
+	if err != nil {
+		log.Fatalf("failed to open 'p022_names.txt': %v", err)
+	}
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
@@ -23,8 +27,11 @@ func LoadNames(fileName string) []string {
 }
 
 func main() {
-	totalScore := 0
-	names := LoadNames("names.txt")
+	var (
+		totalScore int
+		names      = loadNames()
+	)
+
 	sort.Slice(names, func(i, j int) bool { return names[i] < names[j] })
 
 	for index, name := range names {

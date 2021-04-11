@@ -3,26 +3,35 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"math"
 	"os"
 	"strings"
 )
 
-func ReadWords(filename string) []string {
+func readWords(filename string) []string {
 	var words []string
 
-	if file, err := os.Open(filename); err == nil {
-		scanner := bufio.NewScanner(file)
+	file, err := os.Open("p042_words.txt")
+	if err != nil {
+		log.Fatalf("failed to open 'p042_words.txt': %v", err)
+	}
+	defer file.Close()
 
-		for scanner.Scan() {
-			words = append(words, strings.Split(scanner.Text(), ",")...)
-		}
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		words = append(words, strings.Split(scanner.Text(), ",")...)
+	}
+
+	if err := scanner.Err(); err != nil {
+		log.Fatalf("failed to process words: %v", err)
 	}
 
 	return words
 }
 
-func IsTriangleNum(n int) bool {
+func isTriangleNum(n int) bool {
 	nthTriangle := (math.Sqrt(float64(1+8*n)) - 1) / 2
 
 	if nthTriangle == float64(int(nthTriangle)) {
@@ -32,24 +41,24 @@ func IsTriangleNum(n int) bool {
 	return false
 }
 
-func IsTriangleWord(s string) bool {
+func isTriangleWord(s string) bool {
 	sum := 0
 
 	for _, c := range s {
 		sum += int(c) - 96
 	}
 
-	return IsTriangleNum(sum)
+	return isTriangleNum(sum)
 }
 
 func main() {
-	count := 0
+	var count int
 
-	for _, word := range ReadWords("p042_words.txt") {
+	for _, word := range readWords("p042_words.txt") {
 		word = strings.ToLower(word)
 		word = strings.Trim(word, "\"")
 
-		if IsTriangleWord(word) {
+		if isTriangleWord(word) {
 			count++
 		}
 	}

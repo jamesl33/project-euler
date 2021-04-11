@@ -5,11 +5,13 @@ import (
 	"strconv"
 )
 
-func GetDigit(i int) int {
-	currentRange := 9
-	first := 1
-	numDigits := 1
-	skip := 0
+func getDigit(i int) int {
+	var (
+		currentRange = 9
+		first        = 1
+		numDigits    = 1
+		skip         int
+	)
 
 	for skip+currentRange*numDigits < i {
 		skip += currentRange * numDigits
@@ -41,7 +43,7 @@ func main() {
 	total := 1
 
 	for i := 1; i <= 1000000; i *= 10 {
-		total *= GetDigit(i)
+		total *= getDigit(i)
 	}
 
 	fmt.Println(total)

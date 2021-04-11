@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func is_prime(n int) bool {
+func isPrime(n int) bool {
 	if n <= 1 {
 		return false
 	} else if n <= 3 {
@@ -28,7 +28,7 @@ func main() {
 	total := 0
 
 	for i := 0; i < 2000000; i++ {
-		if is_prime(i) {
+		if isPrime(i) {
 			total += i
 		}
 	}
