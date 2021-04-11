@@ -34,7 +34,7 @@ func SourceSolutions(ctx context.Context, root string) <-chan Solution {
 		}
 
 		for _, file := range files {
-			if path.Ext(file.Name()) != ".go" || file.Name() == "test.go" {
+			if path.Ext(file.Name()) != ".go" || file.Name() == "validate.go" {
 				continue
 			}
 
@@ -92,6 +92,7 @@ func FetchAnswers() []string {
 	if err != nil {
 		log.Fatalf("failed to open 'answer.txt': %v", err)
 	}
+	defer file.Close()
 
 	var (
 		answers []string
