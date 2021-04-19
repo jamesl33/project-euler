@@ -128,12 +128,17 @@ func main() {
 	sort.Slice(solutions, func(i, j int) bool { return solutions[i].Problem < solutions[j].Problem })
 
 	for _, solution := range solutions {
-		correctness := "correct"
+		var (
+			correctness = "correct"
+			equality    = "=="
+		)
+
 		if solution.Answer != answers[solution.Problem-1] {
 			correctness = "incorrect"
+			equality = "!="
 		}
 
-		fmt.Printf("Problem %03d: Output is %s '%s == %s'\n", solution.Problem, correctness, solution.Answer,
+		fmt.Printf("Problem %03d: Output is %s '%s %s %s'\n", solution.Problem, correctness, solution.Answer, equality,
 			answers[solution.Problem-1])
 	}
 
